@@ -32,7 +32,6 @@ while loop_count < 10 do
     },
   )
   message = chat_response.dig("choices", 0, "message")
-  pp message
   if message["role"] == "assistant" && message["tool_calls"]
     messages << message
     message["tool_calls"].each do |tool_call|
@@ -43,6 +42,8 @@ while loop_count < 10 do
         { symbolize_names: true },
       )
 
+      puts "Calling tool: #{function_name}, args: #{function_args}"
+
       result = mcp_client.call_tool(function_name, function_args)
       messages << {
         tool_call_id:,
@@ -52,6 +53,7 @@ while loop_count < 10 do
       }
     end
   else
+    puts "Assistant: #{message["content"]}"
     break
   end
 

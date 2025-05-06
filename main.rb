@@ -18,9 +18,7 @@ tools = mcp_client.to_openai_tools
 
 print "Please enter a message: "
 message = gets.chomp
-messages = [
-  { role: "user", content: message },
-]
+messages = [{ role: "user", content: message }]
 
 loop_count = 0
 while loop_count < 10 do
@@ -53,9 +51,15 @@ while loop_count < 10 do
       }
     end
   else
+    loop_count = 0
+    puts
     puts "Assistant: #{message["content"]}"
-    break
+    print "Please enter a message: "
+    message = gets.chomp
+    messages << { role: "user", content: message }
   end
+
+  puts
 
   loop_count += 1
 end

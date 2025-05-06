@@ -33,8 +33,8 @@ while loop_count < 10 do
     },
   )
   message = chat_response.dig("choices", 0, "message")
+  messages << message
   if message["role"] == "assistant" && message["tool_calls"]
-    messages << message
     message["tool_calls"].each do |tool_call|
       tool_call_id = tool_call.dig("id")
       function_name = tool_call.dig("function", "name")

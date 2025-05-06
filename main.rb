@@ -2,6 +2,7 @@ require "date"
 require "dotenv/load"
 require "openai"
 require "mcp_client"
+require "mcp"
 
 OPENAI_API_KEY = ENV["OPENAI_API_KEY"]
 

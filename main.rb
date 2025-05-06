@@ -23,6 +23,8 @@ messages = [{ role: "user", content: message }]
 
 loop_count = 0
 while loop_count < 10 do
+  puts "========================="
+  pp messages
   chat_response = openai_client.chat(
     parameters: {
       model: "gpt-4o",

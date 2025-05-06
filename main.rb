@@ -15,10 +15,12 @@ mcp_client = MCPClient.create_client(
 tools = mcp_client.to_openai_tools
 
 openai_client = OpenAI::Client.new(access_token: OPENAI_API_KEY)
-chat_response = openai_client.chat.completions.create(
-  model: "gpt-4o",
-  messages: [
-    { role: "user", content: "こんにちは！1~10の名前でテキストファイルを作成してください" }
-  ],
-  tools: tools,
+chat_response = openai_client.chat(
+  parameters: {
+    model: "gpt-4o",
+    messages: [
+      { role: "user", content: "こんにちは！1~10の名前でテキストファイルを作成してください" }
+    ],
+    tools: tools,
+  },
 )

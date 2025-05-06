@@ -11,7 +11,7 @@ openai_client = OpenAI::Client.new(access_token: OPENAI_API_KEY)
 mcp_client = MCPClient.create_client(
   mcp_server_configs: [
     MCPClient.stdio_config(
-      command: %W[npx -y @modelcontextprotocol/server-filesystem #{Dir.pwd}/test]
+      command: %W[ruby server.rb],
     )
   ]
 )

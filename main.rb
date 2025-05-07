@@ -24,7 +24,6 @@ messages = [{ role: "user", content: message }]
 loop_count = 0
 while loop_count < 10 do
   puts "========================="
-  pp messages
   chat_response = openai_client.chat(
     parameters: {
       model: "gpt-4o",
@@ -57,6 +56,7 @@ while loop_count < 10 do
     loop_count = 0
     puts
     puts "Assistant: #{message["content"]}"
+    puts
     print "Please enter a message: "
     message = gets.chomp
     messages << { role: "user", content: message }

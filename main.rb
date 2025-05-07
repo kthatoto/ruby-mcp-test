@@ -3,8 +3,13 @@ require "dotenv/load"
 require "openai"
 require "mcp_client"
 require "mcp"
+require_relative "colorize"
 
 OPENAI_API_KEY = ENV["OPENAI_API_KEY"]
+
+USER_PROMPT = green("Please enter a message: ")
+ASSISTANT_PROMPT = blue("Assistant: ")
+TOOL_PROMPT = yellow("Calling Tool: ")
 
 openai_client = OpenAI::Client.new(access_token: OPENAI_API_KEY)
 
@@ -17,7 +22,7 @@ mcp_client = MCPClient.create_client(
 )
 tools = mcp_client.to_openai_tools
 
-print "Please enter a message: "
+print USER_PROMPT
 message = gets.chomp
 messages = [{ role: "user", content: message }]
 
@@ -42,7 +47,8 @@ while loop_count < 10 do
         { symbolize_names: true },
       )
 
-      puts "Calling tool: #{function_name}, args: #{function_args}"
+      print TOOL_PROMPT
+      puts "#{function_name}, args: #{function_args}"
 
       result = mcp_client.call_tool(function_name, function_args)
       messages << {
@@ -54,17 +60,13 @@ while loop_count < 10 do
     end
   else
     loop_count = 0
+    print ASSISTANT_PROMPT
+    puts message["content"]
     puts
-    puts "Assistant: #{message["content"]}"
-    puts
-    print "Please enter a message: "
+    print USER_PROMPT
     message = gets.chomp
     messages << { role: "user", content: message }
   end
 
-  puts
-
   loop_count += 1
 end
-
-puts "Finished!"

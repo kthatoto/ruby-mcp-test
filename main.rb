@@ -10,6 +10,7 @@ OPENAI_API_KEY = ENV["OPENAI_API_KEY"]
 USER_PROMPT = green("Please enter a message: ")
 ASSISTANT_PROMPT = blue("Assistant: ")
 TOOL_PROMPT = yellow("Calling Tool: ")
+SEPARATOR = "=" * 70
 
 openai_client = OpenAI::Client.new(access_token: OPENAI_API_KEY)
 
@@ -22,13 +23,14 @@ mcp_client = MCPClient.create_client(
 )
 tools = mcp_client.to_openai_tools
 
+puts SEPARATOR
 print USER_PROMPT
 message = gets.chomp
 messages = [{ role: "user", content: message }]
 
 loop_count = 0
 while loop_count < 10 do
-  puts "========================="
+  puts SEPARATOR
   chat_response = openai_client.chat(
     parameters: {
       model: "gpt-4o",
